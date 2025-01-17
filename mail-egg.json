@@ -1,0 +1,39 @@
+{
+    "meta": {
+        "version": "1.0.0",
+        "update_url": null
+    },
+    "exported_at": "2025-01-16T00:00:00+00:00",
+    "name": "Mailcow Email Hosting",
+    "author": "Hamudi",
+    "description": "An email hosting solution using Mailcow on Pterodactyl.",
+    "features": null,
+    "images": [
+        "docker:20.10"
+    ],
+    "file_denylist": [],
+    "startup": "docker-compose up -d",
+    "config": {
+        "files": {
+            "docker-compose.yml": {
+                "parser": "yaml",
+                "find": {}
+            }
+        },
+        "startup": {
+            "done": [
+                "mailcow started"
+            ]
+        },
+        "logs": {},
+        "stop": "docker-compose down"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!/bin/bash\n\napt update && apt install -y curl git docker.io docker-compose\n\ngit clone https://github.com/mailcow/mailcow-dockerized.git /home/container\ncd /home/container\n\n# Generate the default config\ncp mailcow.conf.example mailcow.conf\n\n# Adjust necessary permissions\nchmod +x /home/container/*.sh",
+            "container": "debian:buster-slim",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": []
+}
