@@ -1,4 +1,3 @@
-Here’s the README.md without the code:
 
 Mailcow Email Hosting on Pterodactyl
 
