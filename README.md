@@ -1,79 +1,102 @@
+# Mailcow Email Hosting on Pterodactyl
 
-Mailcow Email Hosting on Pterodactyl
+This guide will walk you through setting up a **Mailcow** email server using a custom **Pterodactyl egg**. The Mailcow server is containerized with **Docker**, making it easy to deploy and manage email services on your server.
 
-This guide will walk you through setting up a Mailcow email server using a custom Pterodactyl egg. The Mailcow server will be containerized using Docker, making it easy to deploy and manage email services.
+## Table of Contents
 
-Table of Contents
-	1.	Prerequisites
-	2.	Pterodactyl Egg Installation
-	3.	Creating the Server
-	4.	Configuring Mailcow
-	5.	Post-Setup
-	6.	Troubleshooting
+1. [Prerequisites](#prerequisites)
+2. [Pterodactyl Egg Installation](#pterodactyl-egg-installation)
+3. [Creating the Server](#creating-the-server)
+4. [Configuring Mailcow](#configuring-mailcow)
+5. [Post-Setup](#post-setup)
+6. [Troubleshooting](#troubleshooting)
+7. [Additional Resources](#additional-resources)
 
-1. Prerequisites
+---
 
-Before you start, ensure you have the following:
-	•	Pterodactyl Panel and Wings installed and configured.
-	•	A server with at least 4GB RAM, 2 CPUs, and 20GB disk for Mailcow.
-	•	Docker and Docker Compose installed on the host machine (required for Mailcow).
-	•	A registered domain with the ability to configure DNS records (MX, SPF, DKIM).
+## 1. Prerequisites
 
-2. Pterodactyl Egg Installation
+Before getting started, make sure you have the following:
 
-Import the Custom Egg
-	1.	Go to your Pterodactyl Admin Panel.
-	2.	Navigate to Nests -> Import Egg.
-	3.	Upload the provided egg file to import the Mailcow egg.
+- **Pterodactyl Panel** and **Wings** installed and configured.
+- A server with **at least 4GB RAM**, **2 CPUs**, and **20GB disk** to run Mailcow efficiently.
+- **Docker** and **Docker Compose** installed on the host machine (required for Mailcow).
+- A registered domain with the ability to configure DNS records (MX, SPF, DKIM).
 
-File Contents
-	•	After importing, the egg will create the necessary configurations for Mailcow, including a docker-compose.yml file and a startup command.
+## 2. Pterodactyl Egg Installation
 
-3. Creating the Server
-	1.	After importing the egg, navigate to Servers in the Pterodactyl Panel and create a new server.
-	2.	Choose the Mailcow Email Hosting egg.
-	3.	Assign the required resources:
-	•	CPU: 2 vCPUs minimum.
-	•	RAM: 4GB or more recommended.
-	•	Disk Space: 20GB minimum for the Mailcow setup.
-	4.	Start the server.
+### Importing the Custom Egg
 
-4. Configuring Mailcow
+1. Go to your **Pterodactyl Admin Panel**.
+2. Navigate to **Nests** → **Import Egg**.
+3. Upload the provided **Mailcow egg** to import the Mailcow egg.
 
-Once the server starts, you’ll need to configure Mailcow:
-	1.	Access the server console through Pterodactyl.
-	2.	Navigate to the Mailcow directory.
-	3.	Copy the example configuration to generate a new configuration file.
-	4.	Edit the configuration file to set your hostname, domain, and other options.
-	5.	Permissions:
-Ensure proper permissions for the configuration.
-	6.	Start Mailcow using Docker Compose.
+Once imported, Pterodactyl will automatically set up a `docker-compose.yml` file and a startup command for Mailcow.
 
-5. Post-Setup
+## 3. Creating the Server
 
-After Mailcow has started, follow these steps:
-	1.	DNS Configuration:
-	•	Configure MX, SPF, DKIM, and DMARC records for your domain. You can do this via your domain registrar’s DNS management panel.
-	2.	Access the Mailcow Web Interface:
-	•	Open the Mailcow web interface at http://<YOUR_SERVER_IP>.
-	•	You should see the Mailcow setup page.
-	3.	SSL Setup (Optional):
-	•	Set up Let’s Encrypt for SSL certificates for secure email communication.
-	4.	Email Account Setup:
-	•	Create email accounts through the Mailcow admin interface.
+After importing the egg, create the server:
 
-6. Troubleshooting
-	•	Docker Not Starting:
-	•	Make sure Docker and Docker Compose are properly installed on the host system. Run docker --version and docker-compose --version to verify.
-	•	Firewall Issues:
-	•	Ensure the firewall on your server allows incoming ports for Mailcow (e.g., ports 25, 443, 587).
-	•	SSL Issues:
-	•	If you have SSL errors, check your domain’s DNS settings and ensure your certificates are properly set up.
+1. In the **Pterodactyl Panel**, navigate to **Servers** and click **Create New Server**.
+2. Select the **Mailcow Email Hosting** egg.
+3. Assign the following **resources** to the server:
+   - **CPU**: 2 vCPUs (minimum).
+   - **RAM**: 4GB or more (recommended).
+   - **Disk Space**: 20GB minimum.
+4. Click **Create Server** and then **Start** the server.
 
-Additional Resources
-	•	Mailcow Documentation
-	•	Docker Documentation
-	•	Pterodactyl Documentation
+## 4. Configuring Mailcow
+
+Once your server is running, you will need to configure Mailcow:
+
+1. **Access the server console** through Pterodactyl.
+2. **Navigate to the Mailcow directory**:
+   - Run `cd /home/container/mailcow-dockerized` to move to the Mailcow directory.
+3. **Generate a configuration**:
+   - Copy the example configuration with `cp mailcow.conf.example mailcow.conf`.
+4. **Edit the `mailcow.conf` file**:
+   - Open the `mailcow.conf` file and set your **hostname**, **domain**, and any other necessary configuration options.
+5. **Set proper file permissions**:
+   - Ensure all files have the correct permissions with `chmod +x /home/container/mailcow-dockerized/*.sh`.
+6. **Start Mailcow**:
+   - Use Docker Compose to start the services: `docker-compose up -d`.
+
+## 5. Post-Setup
+
+After Mailcow has started, follow these steps to complete the setup:
+
+1. **Configure DNS**:
+   - Set up **MX**, **SPF**, **DKIM**, and **DMARC** records for your domain. These can be configured through your domain registrar's DNS management panel.
+  
+2. **Access Mailcow's Web Interface**:
+   - Go to `http://<YOUR_SERVER_IP>` in your browser to access Mailcow's setup page.
+   
+3. **SSL Setup (Optional)**:
+   - Configure **Let's Encrypt** to secure your email server with SSL certificates.
+
+4. **Email Account Setup**:
+   - From the Mailcow admin interface, create email accounts and manage your email domains.
+
+## 6. Troubleshooting
+
+Here are some common issues and solutions:
+
+- **Docker not starting**:
+  - Ensure Docker and Docker Compose are correctly installed. Run `docker --version` and `docker-compose --version` to verify installation.
+  
+- **Firewall Issues**:
+  - Make sure that ports like **25**, **443**, **587**, and others required by Mailcow are open in your firewall.
+  
+- **SSL Configuration**:
+  - If SSL issues occur, double-check your domain’s DNS settings and ensure your SSL certificates are correctly configured.
+
+## 7. Additional Resources
+
+- [Mailcow Documentation](https://mailcow.github.io/mailcow-dockerized-docs/)
+- [Docker Documentation](https://docs.docker.com/)
+- [Pterodactyl Documentation](https://pterodactyl.io/)
+
+---
 
 Feel free to ask for
     help on my discord server 
