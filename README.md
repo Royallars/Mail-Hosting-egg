@@ -1,5 +1,7 @@
 # Mailcow Email Hosting on Pterodactyl
 
+NOT WORKING!!!
+
 This guide will walk you through setting up a **Mailcow** email server using a custom **Pterodactyl egg**. The Mailcow server is containerized with **Docker**, making it easy to deploy and manage email services on your server.
 
 ## Table of Contents
